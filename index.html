@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+	<title>REDUX</title>
+
+	<link rel="stylesheet" href="css/reveal.css" />
+	<link rel="stylesheet" href="css/theme/black.css" />
+	<link rel="stylesheet" href="lib/css/zenburn.css" />
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi)
+			? 'css/print/pdf.css'
+			: 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section class="start">
+				<h2>Redux</h2>
+				<p>Hlukhatarenka Yuliya</p>
+			</section>
+			<section>
+				<section class="desciption">
+					<h2>Definition</h2>
+					<p>REDUX is a container for managing state of application.</p>
+					<aside class="notes">
+					</aside>
+				</section>
+				<section class="state">
+					<p><b>State</b> is an regular JavaScript object</p>
+					<img src="./img/state.jpg" />
+					<aside class="notes">
+						<p>
+							What is a state? State can include locally created data, server responses, UI state of your application, and so on.
+						</p>
+						<p>
+							State is an regular JavaScript object. It is
+							stored in one place: in the Redux Store (storage). The example
+							of Store for some game application.
+						</p>
+						<p>
+							Managing state is hard sometime. If a model can update
+							another model, then a view can update a model, which updates
+							another model, and this, in turn, might cause another view to
+							update. At some point, you no longer understand what happens in
+							your app as you have lost control over the when, why, and how of
+							its state.
+						</p>
+					</aside>
+				</section>
+				<section>
+					<p>How does it work?</p>
+					<img src="./img/scheme.jpg" />
+					<aside class="notes">
+						<p>
+							View dispatchs an action when some event happens in View. Action is passed to reducer. 
+						</p>
+						<p>
+							Reducer changes the Store state.
+							Components that are subscribed to the Store updates get notification.
+						</p>
+					</aside>
+				</section>
+				<section>
+					<img src="/img/useful redux.jpg" />
+					<aside class="notes">
+						<p>
+							This is typical architecture of React app. Data goes down to the child Components through properties.The child components usr functions(are pased by parent) to inform about state changes. Redux is technology that separate state form user interface. Each component can interfere withstore directly.
+						</p>
+					</aside>
+				</section>
+			</section>
+			<section class="core-concepts">
+				<h2>Core Concepts</h2>
+				<ul>
+					<li>store</li>
+					<li>actions and action creators</li>
+					<li>reducer</li>
+				</ul>
+			</section>
+			<section>
+					<section class="store">
+							<h3>Store</h3>
+							<p>How to create Store:</p>
+							<img src="./img/create store.jpg">
+							<aside class="notes">
+								<p>
+									STORE it is a state of application. It is read only.
+								</p>
+								<p>
+									Picture shows how to add Store to you application.
+									When we create a Store we have to pass the reducer as a parameter.
+								</p>
+							</aside>
+						</section>
+				<section class="store">
+					<p>What we can do with the <b>Store</b>:</p>
+					<p>
+						<ul>
+							<li>get current state</li>
+							<li>subscribe listeners to change events</li>
+							<li>update state by reducer</li>
+						</ul>
+					</p>
+				</section>
+				<section>
+					<p>To get current state use:</p>
+					<p><b>store.getState()</b></p>
+			  	</section>
+			 	 <section>
+					<p>To subscribe listeners use:</p>
+					<p><b>store.suscribe()</b></p>
+					<img src="./img/store subscribe.jpg">
+					<aside class="notes">
+						<p>
+							This code shows how to subrcrib to store changes and get current state.
+							Unregistering of listeners you can implement by function that is returned by subscribe method.
+							const unsubscribe = store.subscribe(listener).
+						</p>
+					</aside>
+				</section>
+				<section>
+					<p>To update state by reducer use:</p>
+					<p><b>store.dispatch(action)</b></p>
+					<img src="./img/store dispatch.jpg">
+					<aside class="notes">
+						<p>
+							Example shows the code for form that add new fruit to the array (Store). Action = "addFruit".
+						</p>
+					</aside>
+				</section>
+			</section>
+			<section>
+				<section class="action">
+					<h3>Action</h3>
+					<p><b>Action</b> is an object</p>
+					<p>
+					{
+						type: ADD,
+						payload: text
+					}
+					</p>
+					<aside class="notes">
+						<p> 
+							Action is payload of information that send data from your
+							component to your store. 
+							Actions is an object. Usualy the first property is Action type.
+							It is good practice to define type as string constant.
+							The second property is payload (information to change the Store).
+							You send them to the store using
+							store.dispatch().
+						</p>
+					</aside>
+				</section>
+				<section class="action">
+						<h3>Action creators</h3>
+						<img src="./img/action.jpg">
+					<aside class="notes">
+						<p>
+							Action creator is a function that create action.
+							It returns an action object.
+						</p>
+					</aside>
+				</section>
+			</section>
+			<section>
+				<section class="reducer">
+					<h3> Reducers </h3>
+					<img src="./img/reducer.jpg">
+					<aside class="notes">
+						<p>
+							Reducers specify how the application's state changes in response
+							to actions sent to the store. Actions only
+							describe what happened and reducer describe how the application's
+							state changes.
+						</p>
+					</aside>
+				</section>
+				<section class="reducer" data-markdown>
+					<textarea data-template>
+						## Pripciples:
+						- Don't mutate the state
+						- Use pure function
+						- Return the previous state in the default case.
+					</textarea>
+					<aside class="notes">
+						<p>
+						</p>
+					</aside>
+				</section>
+			</section>
+			<section>
+				<section class="example">
+					<h3>Example</h3>
+				</section>
+				<section class="example">
+					<img src="./img/example_step1.jpg" />
+					<aside class="notes">
+						<p>
+							There are a lot of tool that helps track state of Store. I use
+							Redux DevTools chome extention. This is simple app keeps an
+							array of fruit in Store .
+						</p>
+					</aside>
+				</section>
+				<section class="example">
+					<img src="./img/example_step2.jpg" />
+					<aside class="notes">
+						<p>Add "kiwi". Dispatch addFruit action. Store was changed</p>
+					</aside>
+				</section>
+				<section class="example">
+					<img src="./img/example_step3.jpg" />
+					<aside class="notes">
+						<p>Delete "orange". Dispatch deleteFruit action. Store was changed</p>
+					</aside>
+				</section>
+			</section>
+		</div>
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
+
+	<script>
+		Reveal.initialize({
+			dependencies: [
+				{ src: 'plugin/markdown/marked.js' },
+				{ src: 'plugin/markdown/markdown.js' },
+				{ src: 'plugin/notes/notes.js', async: true },
+				{
+					src: 'plugin/highlight/highlight.js',
+					async: true,
+					callback: function () {
+						hljs.initHighlightingOnLoad();
+					}
+				}
+			]
+		});
+	</script>
+</body>
+
+</html>
